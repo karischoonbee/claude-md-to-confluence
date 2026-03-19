@@ -73,10 +73,9 @@ In any Claude Code session:
 /publish-to-confluence <file.md> <page-id> --title "Custom Title"
 ```
 
-**Examples:**
+**Example:**
 ```
 /publish-to-confluence docs/guide.md 1096679454
-/publish-to-confluence RFC-72.md 1072758829 --title "RFC-72: Experimentation Platform"
 ```
 
 ---
@@ -117,16 +116,3 @@ In any Claude Code session:
   ```bash
   node ~/.claude/scripts/md-to-confluence.js your-file.md --dry-run
   ```
-
----
-
-## Files
-
-```
-claude-plugin/
-├── README.md                          ← this file
-├── commands/
-│   └── publish-to-confluence.md       → copy to ~/.claude/commands/
-└── scripts/
-    └── md-to-confluence.js            → copy to ~/.claude/scripts/
-```
