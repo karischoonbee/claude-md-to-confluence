@@ -23,7 +23,7 @@ Parse the arguments as:
 
    Run: `ls ~/.claude/scripts/md-to-confluence.js`
 
-   If it is missing, tell the user: "The md-to-confluence script is not installed. See setup instructions: https://github.com/The-Data-Peeps/claude-md-to-confluence"
+   If it is missing, tell the user: "The md-to-confluence script is not installed. See setup instructions: https://github.com/karischoonbee/claude-md-to-confluence"
    Then stop.
 
 2. **Check environment variables**
@@ -58,6 +58,24 @@ Parse the arguments as:
 
    On success, print the Confluence page URL from the script output.
    On failure, show the error and suggest checking credentials or the page ID.
+
+## Writing the Markdown
+
+The converter supports, beyond headings, paragraphs, tables, code blocks and blockquotes:
+
+| Markdown | Confluence |
+|---|---|
+| Sub-items indented under their parent (any depth, bullets and numbers mixed); an indented line continues the item above | Nested lists |
+| `- [ ] task` / `- [x] done` | Checkboxes (a task list) |
+| `@[Full Name]` or `@[name@company.com]` | A mention (tagged person). Resolved to an account id when the Atlassian credentials are set; an unresolved or ambiguous name stays plain text, with a warning |
+| `@date(2026-10-21)` | A date lozenge |
+| A bare `https://` URL | A smart link (inline card) on an Atlassian site (Jira issues, Confluence pages); a plain link elsewhere |
+| `[text](url)` | A link with that text |
+| Code or a link inside bold text or a heading | Keeps its formatting (code inside bold renders as code: ADF allows only a link next to a code mark) |
+
+**Don't repeat the page title.** Confluence shows the title above the body, so a leading `# Title` is dropped automatically (a note says so; `--keep-h1` keeps it). Start the body with the content, or with `##` sections.
+
+**Republishing a page people edit:** before pushing, compare the page's version history (`/wiki/api/v2/pages/<id>/versions`) with the last publish and carry any in-Confluence edits into the Markdown first, or they are overwritten.
 
 ## Notes
 

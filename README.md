@@ -84,16 +84,33 @@ In any Claude Code session:
 
 | Markdown element | Confluence output |
 |-----------------|-------------------|
-| `# H1` `## H2` … | Heading 1, 2 … |
-| `**bold**` `*italic*` | Bold, italic |
+| `## H2` … | Heading 2 … (a leading `# Title` is dropped, because Confluence already shows the page title; `--keep-h1` keeps it) |
+| `**bold**` `*italic*` | Bold, italic (also with `code` or a link inside; `snake_case` stays literal) |
 | `` `inline code` `` | Inline code |
 | `[link](url)` | Hyperlink |
 | `~~strikethrough~~` | Strikethrough |
 | ` ```lang ` fenced blocks | Code block with syntax highlight |
 | `- item` / `1. item` | Bullet / numbered list |
+| Sub-items indented under an item (any depth, bullets and numbers mixed) | Nested list; an indented line continues the item above |
+| `- [ ] task` / `- [x] done` | Checkboxes (task list) |
+| `@[Full Name]` or `@[name@company.com]` | Mention, resolved to the person's account when the credentials are set (otherwise plain text, with a warning) |
+| `@date(2026-10-21)` | Date |
+| A bare `https://` URL | Smart link on an Atlassian site, plain link elsewhere |
 | `\| col \| col \|` tables | Confluence table |
 | `> blockquote` | Block quote |
 | `---` horizontal rule | Divider |
+
+**Republishing a page people edit:** compare the page's version history with your last publish first, and carry any edits made in Confluence into the Markdown, or the publish overwrites them.
+
+---
+
+## Development
+
+The converter has no dependencies. The tests convert small samples with `--dry-run` (nothing is fetched or pushed):
+
+```bash
+node --test scripts/
+```
 
 ---
 
